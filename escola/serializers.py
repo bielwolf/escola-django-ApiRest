@@ -9,11 +9,11 @@ class EstudanteSerializer(serializers.ModelSerializer):
     
     def validate(self, data):
         if validate_cpf(data['cpf']):
-            raise serializers.ValidationError({'cpf': 'CPF deve conter exatamente 11 dígitos numéricos.'})        
+            raise serializers.ValidationError({'cpf': 'CPF deve conter um valor válido.'})        
         if validate_nome(data['nome']):
             raise serializers.ValidationError({'nome': 'Nome deve conter apenas letras'})
         if validate_numero_telefone(data['numero_telefone']):
-            raise serializers.ValidationError({'numero_telefone': 'Número de telefone deve conter no mínimo 13 caracteres.'})
+            raise serializers.ValidationError({'numero_telefone': 'Número de telefone deve seguir o formato XX XXXXX-XXXX (respeitando traços e espaços).'})
         return data
 
 class CursoSerializer(serializers.ModelSerializer):
