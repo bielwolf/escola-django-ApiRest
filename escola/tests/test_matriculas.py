@@ -6,45 +6,19 @@ from escola.models import Estudante, Curso, Matricula
 from escola.serializers import MatriculaSerializer
 
 class MatriculasTestCase(APITestCase):
+    fixtures = ['prototipo_banco.json']
+
     def setUp(self):
 
-        self.user = User.objects.create_superuser(username='admin', password='admin')
+        self.user = User.objects.get(username="bielwolf")
         self.url = reverse('matriculas-list')
         self.client.force_authenticate(user=self.user)
-        self.estudante_01 = Estudante.objects.create(
-            nome="Teste do modelo 01",
-            email="test01@teste.com",
-            cpf="01022214055",
-            data_nascimento="2002-01-01",
-            numero_telefone="98 99999-9999"
-        )
-        self.curso_01 = Curso.objects.create(
-            codigo="CURSO1",
-            descricao="Descrição do curso 1",
-            nivel="B"
-        )
-        self.matricula_01 = Matricula.objects.create(
-            estudante=self.estudante_01,
-            curso=self.curso_01,
-            periodo="M"
-        )
-        self.estudante_02 = Estudante.objects.create(
-            nome="Teste do modelo 02",
-            email="test02@teste.com",
-            cpf="01022214056",
-            data_nascimento="2004-01-01",
-            numero_telefone="77 99999-9999"
-        )
-        self.curso_02 = Curso.objects.create(
-            codigo="CURSO2",
-            descricao="Descrição do curso 2",
-            nivel="I"
-        )
-        self.matricula_02 = Matricula.objects.create(
-            estudante=self.estudante_02,
-            curso=self.curso_02,
-            periodo="M"
-        )
+        self.estudante_01 = Estudante.objects.get(pk=1)
+        self.curso_01 = Curso.objects.get(pk=1)
+        self.matricula_01 = Matricula.objects.get(pk=1)
+        self.estudante_02 = Estudante.objects.get(pk=2)
+        self.curso_02 = Curso.objects.get(pk=2)
+        self.matricula_02 = Matricula.objects.get(pk=2)
 
     def test_requisicao_get_matriculas(self):
         """Testa a requisição GET para listar as matrículas."""

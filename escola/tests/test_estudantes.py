@@ -5,24 +5,30 @@ from rest_framework import status
 from escola.models import Estudante
 from escola.serializers import EstudanteSerializer
 class EstudantesTestCase(APITestCase):
+    fixtures = ['prototipo_banco.json']
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username='admin', password='admin')
+        # self.user = User.objects.create_superuser(username='admin', password='admin')
+        self.user = User.objects.get(username="bielwolf")
         self.url = reverse('estudantes-list')
         self.client.force_authenticate(user=self.user)
-        self.estudante_01 = Estudante.objects.create(
-            nome="Teste do modelo 01",
-            email="test01@teste.com",
-            cpf="01022214055",
-            data_nascimento="2002-01-01",
-            numero_telefone="98 99999-9999"
-        )
-        self.estudante_02 = Estudante.objects.create(
-            nome="Teste do modelo 02",
-            email="test02@teste.com",
-            cpf="01022214056",
-            data_nascimento="2004-01-01",
-            numero_telefone="77 99999-9999"
-        )
+        # self.estudante_01 = Estudante.objects.create(
+        #     nome="Teste do modelo 01",
+        #     email="test01@teste.com",
+        #     cpf="01022214055",
+        #     data_nascimento="2002-01-01",
+        #     numero_telefone="98 99999-9999"
+        # )
+        # self.estudante_02 = Estudante.objects.create(
+        #     nome="Teste do modelo 02",
+        #     email="test02@teste.com",
+        #     cpf="01022214056",
+        #     data_nascimento="2004-01-01",
+        #     numero_telefone="77 99999-9999"
+        # )
+        self.estudante_01 = Estudante.objects.get(pk=1)
+        self.estudante_02 = Estudante.objects.get(pk=2)
+        
 
     def test_requisicao_get_estudantes(self):
         """Testa a requisição GET para listar os estudantes."""
